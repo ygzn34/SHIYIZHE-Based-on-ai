@@ -81,7 +81,12 @@ app.use((req, res) => {
     });
 });
 
-// --- 启动服务器 ---
-app.listen(port, () => {
-  console.log(`CollectMemory backend is running at http://localhost:${port}`);
-});
+// 只在本地环境启动 listen
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Local running on port ${port}`);
+  });
+}
+
+// 导出给 Vercel 使用（关键！必须加！）
+module.exports = app;
